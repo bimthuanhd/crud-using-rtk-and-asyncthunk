@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
 
 //create action
 export const createUser = createAsyncThunk(
@@ -27,21 +28,18 @@ export const createUser = createAsyncThunk(
 
 //read action
 export const showUser = createAsyncThunk(
-  "showUser",
+  'showUser',
   async (args, { rejectWithValue }) => {
-    const response = await fetch(
-      "https://641dd63d945125fff3d75742.mockapi.io/crud"
-    );
-
     try {
-      const result = await response.json();
-      console.log(result);
-      return result;
+      const response = await axios.get('http://localhost:3333/product/list');
+      console.log(response.data);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error);
     }
   }
 );
+
 //delete action
 export const deleteUser = createAsyncThunk(
   "deleteUser",
